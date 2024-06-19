@@ -1,7 +1,14 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsDateString, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsDateString, IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class CreateEstudianteDto {
+  @ApiProperty()
+  @IsNotEmpty({ message: 'El campo ci no debe ser vacío' })
+  @IsString({ message: 'El campo ci debe ser de tipo cadena' })
+  @MaxLength(15, { message: 'El campo ci no debe ser mayor a 15 caracteres' })
+  @MinLength(7, { message: 'El campo ci no debe ser menor a 7 caracteres' })
+  readonly ci: string;
+
   @ApiProperty()
   @IsNotEmpty({ message: 'El campo nombres no debe ser vacío' })
   @IsString({ message: 'El campo nombres debe ser de tipo cadena' })
@@ -20,11 +27,4 @@ export class CreateEstudianteDto {
   @IsNotEmpty({ message: 'El campo fechaNacimiento no debe ser vacío' })
   @IsDateString({}, { message: 'El campo fechaNacimiento debe ser de tipo fecha' })
   readonly fechaNacimiento: Date;
-  
-  @ApiProperty()
-  @IsNotEmpty({ message: 'El campo usario no debe ser vacío' })
-  @IsString({ message: 'El campo usario debe ser de tipo cadena' })
-  @MaxLength(12, { message: 'El campo usario no debe ser mayor a 12 caracteres' })
-  @MinLength(4, { message: 'El campo usario no debe ser menor a 4 caracteres' })
-  readonly usuario: string;
 }
