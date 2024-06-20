@@ -23,7 +23,7 @@ function onSubmit() {
       <input v-model="clave" type="password" class="form-input" placeholder="Contraseña" />
 
       <p v-if="error" class="text-danger">Usuario y/o contraseña incorrectos</p>
-      <input type="submit" class="form-submit" value="Ingresar" />
+      <input type="submit" class="form-submit" value="INGRESAR" />
     </form>
   </div>
 </template>
@@ -37,15 +37,15 @@ function onSubmit() {
   width: 20%;
   min-width: 350px;
   max-width: 100%;
-  background: rgba(19, 35, 47, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
   padding: 40px;
-  box-shadow: 0 4px 10px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px 4px rgba(255, 0, 0, 0.3);
 }
 
 .form-label {
   margin-top: 2rem;
-  color: white;
+  color: rgb(255, 0, 0);
   margin-bottom: 0.5rem;
 }
 
@@ -53,12 +53,12 @@ function onSubmit() {
   padding: 10px 15px;
   background: none;
   background-image: none;
-  border: 1px solid white;
-  color: white;
+  border: 1px solid rgb(255, 0, 0);
+  color: black;
 }
 
 .form-submit {
-  background: #ee5007;
+  background: #ff0000;
   border: none;
   border-radius: 5rem;
   color: white;

@@ -4,10 +4,18 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { Curso } from 'src/cursos/entities/curso.entity';
+import { Asistencia } from 'src/asistencias/entities/asistencia.entity';
+import { Calificacion } from 'src/calificaciones/entities/calificacion.entity';
 
 @Entity('estudiantes')
 export class Estudiante {
@@ -31,4 +39,18 @@ export class Estudiante {
 
   @UpdateDateColumn({ name: 'fecha_modificacion' })
   fechaModificacion: Date;
+
+  @OneToOne(() => Usuario, usuario => usuario.estudiantes)
+  @JoinColumn({ name: 'id_usuario', referencedColumnName: 'id' })
+  usuario: Usuario;
+
+  @ManyToOne(() => Curso, curso => curso.estudiantes)
+  @JoinColumn({ name: 'id_curso', referencedColumnName: 'id' })
+  curso: Curso;
+
+  @OneToMany(() => Asistencia, asistencia => asistencia.estudiante)
+  asistencias: Asistencia[];
+
+  @OneToMany(() => Calificacion, calificacion => calificacion.estudiante)
+  calificaciones: Calificacion[];
 }

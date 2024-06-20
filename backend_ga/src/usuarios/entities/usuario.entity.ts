@@ -1,5 +1,16 @@
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Estudiante } from 'src/estudiantes/entities/estudiante.entity';
+import { Docente } from 'src/docentes/entities/docente.entity';
 
 @Entity('usuarios')
 export class Usuario {
@@ -20,6 +31,12 @@ export class Usuario {
 
   @UpdateDateColumn({ name: 'fecha_modificacion' })
   fechaModificacion: Date;
+
+  @OneToOne(() => Estudiante, estudiante => estudiante.usuario)
+  estudiantes: Estudiante[];
+
+  @OneToOne(() => Docente, docente => docente.usuario)
+  docentes: Docente[];
 
   @BeforeInsert()
   @BeforeUpdate()

@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsDateString,
+  IsDefined,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class CreateEstudianteDto {
   @ApiProperty()
@@ -27,4 +35,14 @@ export class CreateEstudianteDto {
   @IsNotEmpty({ message: 'El campo fechaNacimiento no debe ser vacío' })
   @IsDateString({}, { message: 'El campo fechaNacimiento debe ser de tipo fecha' })
   readonly fechaNacimiento: Date;
+
+  @ApiProperty()
+  @IsDefined({ message: 'El campo idUsuario debe estar definido' })
+  @IsNumber({}, { message: 'El campo idUsuario debe ser de tipo numérico' })
+  readonly idUsuario: number;
+
+  @ApiProperty()
+  @IsDefined({ message: 'El campo idCurso debe estar definido' })
+  @IsNumber({}, { message: 'El campo idCurso debe ser de tipo numérico' })
+  readonly idCurso: number;
 }

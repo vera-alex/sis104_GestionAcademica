@@ -142,17 +142,21 @@ const location = useRoute()
     </div>
     <div class="offcanvas-body">
       <div class="order-md-last">
-        <h4 class="text-primary text-uppercase mb-3">Search</h4>
-        <div class="search-bar border rounded-2 border-dark-subtle">
-          <form id="search-form" class="text-center d-flex align-items-center" action="" method="">
-            <input
-              type="text"
-              class="form-control border-0 bg-transparent"
-              placeholder="Search Here"
-            />
-            <iconify-icon icon="tabler:search" class="fs-4 me-3"></iconify-icon>
-          </form>
-        </div>
+        <h4 class="text-primary text-uppercase mb-3">Hola {{ authStore.user }}</h4>
+        <RouterLink
+          v-if="!authStore.token"
+          to="/login"
+          class="btn custom-btn d-lg-block d-none"
+          data-bs-dismiss="offcanvas"
+          >Iniciar Sesión</RouterLink
+        >
+        <a
+          v-else
+          @click="authStore.logout()"
+          class="btn custom-btn d-lg-block d-none"
+          data-bs-dismiss="offcanvas"
+          >SALIR</a
+        >
       </div>
     </div>
   </div>
@@ -161,7 +165,13 @@ const location = useRoute()
     <div class="container-fluid">
       <div class="main-logo d-lg-none">
         <a href="index.html">
-          <img src="@/assets/images/logo.png" alt="logo" class="img-fluid" />
+          <img
+            src="@/assets/images/logo-colegio.png"
+            alt="logo"
+            width="80"
+            height="80"
+            class="img-fluid"
+          />
         </a>
       </div>
 
@@ -192,87 +202,52 @@ const location = useRoute()
 
         <div class="offcanvas-body justify-content-between">
           <div class="main-logo">
-            <a href="index.html">
-              <img src="@/assets/images/logo.png" alt="logo" class="img-fluid" />
-            </a>
+            <RouterLink to="/" class="nav-link click-scroll">
+              <img
+                src="@/assets/images/logo-colegio.png"
+                alt="logo"
+                height="80"
+                width="80"
+                class="img-fluid"
+              />
+            </RouterLink>
           </div>
 
-          <ul class="navbar-nav menu-list list-unstyled align-items-lg-center d-flex gap-md-3 mb-0">
+          <ul
+            v-if="authStore.role == 'Administrador'"
+            class="navbar-nav menu-list list-unstyled align-items-lg-center d-flex gap-md-3 mb-0"
+          >
             <li class="nav-item">
-              <a href="index.html" class="nav-link mx-2 active">Home</a>
+              <RouterLink to="/" class="nav-link click-scroll">Inicio</RouterLink>
             </li>
 
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link mx-2 dropdown-toggle align-items-center"
-                role="button"
-                id="pages"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >Pages</a
-              >
-              <ul class="dropdown-menu" aria-labelledby="pages">
-                <li>
-                  <a href="about.html" class="dropdown-item"
-                    >About Us<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-                <li>
-                  <a href="instructors.html" class="dropdown-item"
-                    >Instructors<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-                <li>
-                  <a href="cart.html" class="dropdown-item"
-                    >Cart<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-                <li>
-                  <a href="wishlist.html" class="dropdown-item"
-                    >Wishlist<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-                <li>
-                  <a href="checkout.html" class="dropdown-item"
-                    >Checkout<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-                <li>
-                  <a href="price-plan.html" class="dropdown-item"
-                    >Price Plan<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-                <li>
-                  <a href="contact.html" class="dropdown-item"
-                    >Contact<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-                <li>
-                  <a href="faqs.html" class="dropdown-item"
-                    >FAQs<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-                <li>
-                  <a href="account.html" class="dropdown-item"
-                    >Account<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-                <li>
-                  <a href="thank-you.html" class="dropdown-item"
-                    >Thankyou<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-                <li>
-                  <a href="error.html" class="dropdown-item"
-                    >Error 404<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-                <li>
-                  <a href="styles.html" class="dropdown-item"
-                    >Styles<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-              </ul>
+            <li class="nav-item">
+              <RouterLink to="/usuarios" class="nav-link click-scroll">Usuarios</RouterLink>
+            </li>
+
+            <li class="nav-item">
+              <RouterLink to="/docentes" class="nav-link click-scroll">Docentes</RouterLink>
+            </li>
+
+            <li class="nav-item">
+              <RouterLink to="/estudiantes" class="nav-link click-scroll">Estudiantes</RouterLink>
+            </li>
+          </ul>
+
+          <ul
+            v-if="authStore.role == 'Estudiante'"
+            class="navbar-nav menu-list list-unstyled align-items-lg-center d-flex gap-md-3 mb-0"
+          >
+            <li class="nav-item">
+              <RouterLink to="/" class="nav-link click-scroll">Inicio</RouterLink>
+            </li>
+
+            <li class="nav-item">
+              <RouterLink to="/asistencias" class="nav-link click-scroll">Asistencias</RouterLink>
+            </li>
+
+            <li class="nav-item">
+              <RouterLink to="/rendimientos" class="nav-link click-scroll">Rendimiento</RouterLink>
             </li>
 
             <li class="nav-item dropdown">
@@ -282,135 +257,69 @@ const location = useRoute()
                 id="courses"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-                >Courses</a
+                >Materias</a
               >
               <ul class="dropdown-menu" aria-labelledby="courses">
                 <li>
-                  <a href="courses.html" class="dropdown-item"
-                    >Course<span class="badge bg-secondary text-white ms-2">PRO</span></a
+                  <RouterLink to="/literaturas" class="nav-link click-scroll dropdown-item"
+                    >Literatura</RouterLink
                   >
                 </li>
                 <li>
-                  <a href="courses-details.html" class="dropdown-item"
-                    >Courses Detail<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-              </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link mx-2 dropdown-toggle align-items-center"
-                role="button"
-                id="events"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >events</a
-              >
-              <ul class="dropdown-menu" aria-labelledby="courses">
-                <li>
-                  <a href="event.html" class="dropdown-item"
-                    >event<span class="badge bg-secondary text-white ms-2">PRO</span></a
+                  <RouterLink to="/extranjeras" class="nav-link click-scroll dropdown-item"
+                    >Lengua Extranjera</RouterLink
                   >
                 </li>
                 <li>
-                  <a href="event-details.html" class="dropdown-item"
-                    >event details<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-              </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link mx-2 dropdown-toggle align-items-center"
-                role="button"
-                id="blog"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >blog</a
-              >
-              <ul class="dropdown-menu" aria-labelledby="blog">
-                <li>
-                  <a href="blog.html" class="dropdown-item"
-                    >blog<span class="badge bg-secondary text-white ms-2">PRO</span></a
+                  <RouterLink to="/csociales" class="nav-link click-scroll dropdown-item"
+                    >Ciencias Sociales</RouterLink
                   >
                 </li>
                 <li>
-                  <a href="single-post.html" class="dropdown-item"
-                    >single post<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-              </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link mx-2 dropdown-toggle align-items-center"
-                role="button"
-                id="shop"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >shop</a
-              >
-              <ul class="dropdown-menu" aria-labelledby="shop">
-                <li>
-                  <a href="shop.html" class="dropdown-item"
-                    >Shop<span class="badge bg-secondary text-white ms-2">PRO</span></a
-                  >
-                </li>
-                <li>
-                  <a href="single-product.html" class="dropdown-item"
-                    >Single Product<span class="badge bg-secondary text-white ms-2">PRO</span></a
+                  <RouterLink to="/matematicas" class="nav-link click-scroll dropdown-item"
+                    >Matemática</RouterLink
                   >
                 </li>
               </ul>
             </li>
 
             <li class="nav-item">
-              <a href="contact.html" class="nav-link mx-2">contact</a>
-            </li>
-            <li class="nav-item">
-              <a
-                href="https://templatesjungle.gumroad.com/l/jubilee-free-bootstrap-5-html-website-template-for-online-course"
-                class="nav-link mx-2 text-decoration-underline"
-                target="_blank"
-                >GET PRO</a
+              <RouterLink to="/contactar" class="nav-link click-scroll dropdown-item"
+                >Contactar Docente</RouterLink
               >
+            </li>
+          </ul>
+          <ul
+            v-if="authStore.role == 'Docente'"
+            class="navbar-nav menu-list list-unstyled align-items-lg-center d-flex gap-md-3 mb-0"
+          >
+            <li class="nav-item">
+              <RouterLink to="/" class="nav-link click-scroll">Inicio</RouterLink>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link mx-2 dropdown-toggle align-items-center"
+                role="button"
+                id="courses"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >Cursos</a
+              >
+              <ul class="dropdown-menu" aria-labelledby="courses">
+                <li>
+                  <RouterLink to="/" class="nav-link click-scroll dropdown-item">5 A</RouterLink>
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <RouterLink to="/" class="nav-link click-scroll">Asistencias</RouterLink>
             </li>
           </ul>
 
           <div class="d-none d-lg-flex align-items-center">
             <ul class="d-flex align-items-center list-unstyled m-0">
-              <li>
-                <a href="account.html" class="ms-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px">
-                    <use href="#user-circle" />
-                  </svg>
-                </a>
-              </li>
-              <li>
-                <a href="wishlist.html" class="ms-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px">
-                    <use href="#heart" />
-                  </svg>
-                </a>
-              </li>
-
-              <li class="">
-                <a
-                  href="#"
-                  class="ms-3"
-                  data-bs-toggle="offcanvas"
-                  data-bs-target="#offcanvasCart"
-                  aria-controls="offcanvasCart"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px">
-                    <use href="#shopping-bag" />
-                  </svg>
-                </a>
-              </li>
-
               <li>
                 <a
                   href="#"
@@ -420,7 +329,7 @@ const location = useRoute()
                   aria-controls="offcanvasSearch"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px">
-                    <use href="#search" />
+                    <use href="#user-circle" />
                   </svg>
                 </a>
               </li>
@@ -433,35 +342,6 @@ const location = useRoute()
       <div class="d-flex align-items-end mt-3">
         <ul class="d-flex align-items-center list-unstyled m-0">
           <li>
-            <a href="account.html" class="me-3">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px">
-                <use href="#user-circle" />
-              </svg>
-            </a>
-          </li>
-          <li>
-            <a href="wishlist.html" class="me-3">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px">
-                <use href="#heart" />
-              </svg>
-            </a>
-          </li>
-
-          <li class="">
-            <a
-              href="#"
-              class="me-3"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasCart"
-              aria-controls="offcanvasCart"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px">
-                <use href="#shopping-bag" />
-              </svg>
-            </a>
-          </li>
-
-          <li>
             <a
               href="#"
               class="me-3"
@@ -470,7 +350,7 @@ const location = useRoute()
               aria-controls="offcanvasSearch"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px">
-                <use href="#search" />
+                <use href="#user-circle" />
               </svg>
             </a>
           </li>

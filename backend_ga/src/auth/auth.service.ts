@@ -16,7 +16,7 @@ export class AuthService {
     const { usuario, clave } = authLoginDto;
     const usuarioOk = await this.usuarioService.validate(usuario, clave);
 
-    const payload = { sub: usuarioOk.id };
+    const payload = { sub: usuarioOk.id, role: usuarioOk.rol };
     const access_token = await this.getAccessToken(payload);
 
     return { ...usuarioOk, access_token };

@@ -7,7 +7,7 @@
         <div class="col-sm-6 col-lg-4 my-3">
           <div class="footer-menu">
             <a href="index.html">
-              <img src="@/assets/images/logo.png" alt="logo" class="img-fluid" />
+              <img src="@/assets/images/logo-colegio.png" alt="logo" class="img-fluid" />
             </a>
             <div class="social-links mt-4">
               <ul class="d-flex list-unstyled">

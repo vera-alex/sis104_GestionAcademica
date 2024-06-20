@@ -22,6 +22,11 @@ export class EstudiantesController {
     return this.estudiantesService.findAll();
   }
 
+  @Get('estudiante/:id')
+  findMateriasByEstudiante(@Param('id') id: string) {
+    return this.estudiantesService.findMateriasByEstudiante(+id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.estudiantesService.findOne(+id);
